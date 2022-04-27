@@ -20,18 +20,12 @@ func main() {
 		config.Config.DbUserDevelop, config.Config.DbPasswordDevelop, config.Config.DbHostDevelop,
 		config.Config.DbPortDevelop, config.Config.DbNameDevelop)
 
+	fmt.Println(dsn)
+
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 
 	db.AutoMigrate(&User{})
-
-	user := User{
-		FirstName: "Taiki",
-		LastName:  "Noda",
-		Email:     "hoge@hogehoge",
-	}
-
-	db.Create(&user)
 }
