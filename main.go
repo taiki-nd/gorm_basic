@@ -8,6 +8,13 @@ import (
 	"gorm.io/gorm"
 )
 
+type User struct {
+	Id        int64
+	FirstName string
+	LastName  string
+	Email     string
+}
+
 func main() {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		config.Config.DbUserDevelop, config.Config.DbPasswordDevelop, config.Config.DbHostDevelop,
@@ -19,5 +26,6 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	fmt.Println(db)
+
+	db.AutoMigrate(&User{})
 }
