@@ -8,6 +8,10 @@ import (
 )
 
 type ConfigList struct {
+	DbSqlDevelop      string
+	DbHostDevelop     string
+	DbPortDevelop     string
+	DbNameDevelop     string
 	DbUserDevelop     string
 	DbPasswordDevelop string
 }
@@ -22,7 +26,11 @@ func init() {
 	}
 
 	Config = ConfigList{
-		DbUserDevelop:     cfg.Section("db_development").Key("db_user_develop").String(),
+		DbSqlDevelop:      cfg.Section("db_development").Key("db_sql_develop").String(),
+		DbHostDevelop:     cfg.Section("db_development").Key("db_host_develop").String(),
+		DbUserDevelop:     cfg.Section("db_development").Key("db_port_develop").String(),
+		DbNameDevelop:     cfg.Section("db_development").Key("db_name_develop").String(),
+		DbPortDevelop:     cfg.Section("db_development").Key("db_user_develop").String(),
 		DbPasswordDevelop: cfg.Section("db_development").Key("db_password_develop").String(),
 	}
 }
