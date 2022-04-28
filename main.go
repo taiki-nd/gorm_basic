@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"gorm_basic/config"
 
@@ -11,9 +10,16 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName sql.NullString `gorm:"type:VARCHAR(30); default:'Taro'"`
-	LastName  sql.NullString `gorm:"size:100; null"`
-	Email     sql.NullString `gorm:"unique; not null"`
+	FirstName string  `gorm:"type:VARCHAR(30); default:'Taro'"`
+	LastName  string  `gorm:"size:100; null"`
+	Email     string  `gorm:"unique; not null"`
+	Address   Address `gorm:"foreignKey:UserId"`
+}
+
+type Address struct {
+	gorm.Model
+	Content string
+	UserId  uint
 }
 
 func main() {
@@ -28,17 +34,21 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	db.Migrator().DropTable(&User{})
-	db.Migrator().CreateTable(&User{}) //emailのunique keyがおかしくなるためテーブルを作り直す
+	db.Migrator().DropTable(&User{}, &Address{})
+	db.Migrator().CreateTable(&User{}, &Address{}) //emailのunique keyがおかしくなるためテーブルを作り直す
 
 	user := User{
-		Email: sql.NullString{
-			String: "a@a.com",
-			Valid:  true,
-		},
+		FirstName: "taiki",
+		LastName:  "Noda",
+		Email:     "a@a.com",
 	}
-
 	db.Create(&user)
+
+	address := Address{
+		UserId:  user.ID,
+		Content: "yokohama",
+	}
+	db.Create(&address)
 
 	//db.AutoMigrate(&User{})
 	/*
