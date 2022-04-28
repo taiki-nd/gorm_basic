@@ -57,10 +57,44 @@ func main() {
 	//
 	// delete user
 	//
-	user := User{
-		Id: 1,
-	}
+	/*
+		user := User{
+			Id: 1,
+		}
+		db.Delete(&user)
+	*/
 
-	db.Delete(&user)
+	//
+	//ruery
+	//
+	/*
+		users := []User{
+			{
+				FirstName: "Taiki",
+				LastName:  "Noda",
+				Email:     "taiki@hogehoge",
+			},
+			{
+				FirstName: "Erika",
+				LastName:  "Noma",
+				Email:     "erika@hogehoge",
+			},
+			{
+				FirstName: "Kazuaki",
+				LastName:  "Ichitoku",
+				Email:     "kazuaki@hogehoge",
+			},
+		}
 
+		for _, user := range users {
+			db.Create(&user)
+		}
+	*/
+
+	user := User{}
+
+	//db.First(&user)
+	//db.Last(&user)
+	db.Where("last_name", "Noda").First(&user)
+	fmt.Println(user)
 }
