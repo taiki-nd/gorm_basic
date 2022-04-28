@@ -28,4 +28,39 @@ func main() {
 	}
 
 	db.AutoMigrate(&User{})
+
+	//
+	// create record
+	//
+	/*
+		user := User{
+			FirstName: "Taiki",
+			LastName:  "Noda",
+			Email:     "hoge@hogehoge",
+		}
+		db.Create(&user)
+	*/
+
+	//
+	// update user
+	//
+	/*
+		user := User{
+			Id:        1,
+			FirstName: "Taiki updated",
+			LastName:  "Noda updated",
+			Email:     "hoge@hogehoge updated",
+		}
+		db.Updates(&user)
+	*/
+
+	//
+	// delete user
+	//
+	user := User{
+		Id: 1,
+	}
+
+	db.Delete(&user)
+
 }
