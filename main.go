@@ -19,7 +19,7 @@ type User struct {
 type Address struct {
 	gorm.Model
 	Content string
-	UserId  int
+	UserId  uint
 }
 
 func main() {
@@ -36,6 +36,19 @@ func main() {
 
 	db.Migrator().DropTable(&User{}, &Address{})
 	db.Migrator().CreateTable(&User{}, &Address{}) //emailのunique keyがおかしくなるためテーブルを作り直す
+
+	user := User{
+		FirstName: "taiki",
+		LastName:  "Noda",
+		Email:     "a@a.com",
+	}
+	db.Create(&user)
+
+	address := Address{
+		UserId:  user.ID,
+		Content: "yokohama",
+	}
+	db.Create(&address)
 
 	//db.AutoMigrate(&User{})
 	/*
