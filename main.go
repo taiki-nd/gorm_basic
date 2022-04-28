@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"gorm_basic/config"
 
@@ -11,9 +10,9 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName sql.NullString `gorm:"type:VARCHAR(30); default:'Taro'"`
-	LastName  sql.NullString `gorm:"size:100; null"`
-	Email     sql.NullString `gorm:"unique; not null"`
+	FirstName string `gorm:"type:VARCHAR(30); default:'Taro'"`
+	LastName  string `gorm:"size:100; null"`
+	Email     string `gorm:"unique; not null"`
 }
 
 func main() {
@@ -31,12 +30,7 @@ func main() {
 	db.Migrator().DropTable(&User{})
 	db.Migrator().CreateTable(&User{}) //emailのunique keyがおかしくなるためテーブルを作り直す
 
-	user := User{
-		Email: sql.NullString{
-			String: "a@a.com",
-			Valid:  true,
-		},
-	}
+	user := User{}
 
 	db.Create(&user)
 
