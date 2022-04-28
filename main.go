@@ -36,6 +36,23 @@ func main() {
 
 	db.AutoMigrate(&User{}, &Address{})
 
+	user := User{
+		FirstName: "taiki",
+		LastName:  "Noda",
+		Email:     "a@a.com",
+		Address: []Address{
+			{
+				Content: "Yokohama",
+			},
+			{
+				Content: "Sapporo",
+			},
+			{
+				Content: "Hakata",
+			},
+		},
+	}
+	db.Create(&user)
 	/*
 		user := User{
 			Model: gorm.Model{
