@@ -10,9 +10,9 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName string `gorm:"type:VARCHAR(30)"`
-	LastName  string `gorm:"size:100"`
-	Email     string `gorm:"unique"`
+	FirstName string `gorm:"type:VARCHAR(30); default:'Taro'"`
+	LastName  string `gorm:"size:100; null"`
+	Email     string `gorm:"unique; not null"`
 }
 
 func main() {
@@ -27,7 +27,14 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&User{})
+	db.Migrator().DropTable(&User{})
+	db.Migrator().CreateTable(&User{}) //emailのunique keyがおかしくなるためテーブルを作り直す
+
+	user := User{}
+
+	db.Create(&user)
+
+	//db.AutoMigrate(&User{})
 	/*
 		user := User{
 			Model: gorm.Model{
@@ -98,7 +105,6 @@ func main() {
 			db.Create(&user)
 		}
 	*/
-
 	/*
 		user := User{}
 
