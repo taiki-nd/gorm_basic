@@ -10,14 +10,16 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName string `gorm:"type:VARCHAR(30); default:'Taro'"`
-	LastName  string `gorm:"size:100; null"`
-	Email     string `gorm:"unique; not null"`
+	FirstName string  `gorm:"type:VARCHAR(30); default:'Taro'"`
+	LastName  string  `gorm:"size:100; null"`
+	Email     string  `gorm:"unique; not null"`
+	Address   Address `gorm:"foreignKey:UserId"`
 }
 
 type Address struct {
 	gorm.Model
 	Content string
+	UserId  int
 }
 
 func main() {
