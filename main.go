@@ -44,12 +44,23 @@ func main() {
 	//
 	// update user
 	//
+	/*
+		user := User{
+			Id:        1,
+			FirstName: "Taiki updated",
+			LastName:  "Noda updated",
+			Email:     "hoge@hogehoge updated",
+		}
+		db.Updates(&user)
+	*/
+
+	//
+	// delete user
+	//
 	user := User{
-		Id:        1,
-		FirstName: "Taiki updated",
-		LastName:  "Noda updated",
-		Email:     "hoge@hogehoge updated",
+		Id: 1,
 	}
-	db.Updates(&user)
+
+	db.Delete(&user)
 
 }
