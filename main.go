@@ -10,10 +10,10 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName string  `gorm:"type:VARCHAR(30); default:'Taro'"`
-	LastName  string  `gorm:"size:100; null"`
-	Email     string  `gorm:"unique; not null"`
-	Address   Address `gorm:"foreignKey:UserId"`
+	FirstName string    `gorm:"type:VARCHAR(30); default:'Taro'"`
+	LastName  string    `gorm:"size:100; null"`
+	Email     string    `gorm:"unique; not null"`
+	Address   []Address `gorm:"many2many:user_addresses"`
 }
 
 type Address struct {
@@ -34,20 +34,25 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	db.Migrator().DropTable(&User{}, &Address{})
-	db.Migrator().CreateTable(&User{}, &Address{}) //emailのunique keyがおかしくなるためテーブルを作り直す
+	db.AutoMigrate(&User{}, &Address{})
 
 	user := User{
 		FirstName: "taiki",
 		LastName:  "Noda",
 		Email:     "a@a.com",
-		Address: Address{
-			Content: "yokohama",
+		Address: []Address{
+			{
+				Content: "Yokohama",
+			},
+			{
+				Content: "Sapporo",
+			},
+			{
+				Content: "Hakata",
+			},
 		},
 	}
 	db.Create(&user)
-
-	//db.AutoMigrate(&User{})
 	/*
 		user := User{
 			Model: gorm.Model{
