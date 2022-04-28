@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"gorm_basic/config"
+	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 type User struct {
-	Id        int64
+	gorm.Model
 	FirstName string
 	LastName  string
 	Email     string
@@ -28,6 +29,14 @@ func main() {
 	}
 
 	db.AutoMigrate(&User{})
+
+	user := User{
+		Model: gorm.Model{
+			CreatedAt: time.Now(),
+		},
+	}
+
+	fmt.Println(user)
 
 	//
 	// create record
@@ -91,10 +100,12 @@ func main() {
 		}
 	*/
 
-	user := User{}
+	/*
+		user := User{}
 
-	//db.First(&user)
-	//db.Last(&user)
-	db.Where("last_name", "Noda").First(&user)
-	fmt.Println(user)
+		//db.First(&user)
+		//db.Last(&user)
+		db.Where("last_name", "Noda").First(&user)
+		fmt.Println(user)
+	*/
 }
