@@ -15,6 +15,11 @@ type User struct {
 	Email     string `gorm:"unique; not null"`
 }
 
+type Address struct {
+	gorm.Model
+	Content string
+}
+
 func main() {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		config.Config.DbUserDevelop, config.Config.DbPasswordDevelop, config.Config.DbHostDevelop,
@@ -27,8 +32,8 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	db.Migrator().DropTable(&User{})
-	db.Migrator().CreateTable(&User{}) //emailのunique keyがおかしくなるためテーブルを作り直す
+	db.Migrator().DropTable(&User{}, &Address{})
+	db.Migrator().CreateTable(&User{}, &Address{}) //emailのunique keyがおかしくなるためテーブルを作り直す
 
 	//db.AutoMigrate(&User{})
 	/*
