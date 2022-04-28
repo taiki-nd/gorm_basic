@@ -41,14 +41,11 @@ func main() {
 		FirstName: "taiki",
 		LastName:  "Noda",
 		Email:     "a@a.com",
+		Address: Address{
+			Content: "yokohama",
+		},
 	}
 	db.Create(&user)
-
-	address := Address{
-		UserId:  user.ID,
-		Content: "yokohama",
-	}
-	db.Create(&address)
 
 	//db.AutoMigrate(&User{})
 	/*
